@@ -85,8 +85,8 @@
           <el-table-column prop="serviceZone" label="服务范围"></el-table-column>
           <el-table-column fixed="right" label="操作">
             <template slot-scope="scope">
-              <el-button @click="service(scope.row)" type="text" size="small">服务</el-button>
-              <el-button @click="editMerchant(scope.row)" type="text" size="small">编辑</el-button>
+              <el-button @click="serviceHandleClick(scope.row.id)" type="text" size="small">服务</el-button>
+              <el-button @click="editHandleClick(scope.row)" type="text" size="small">编辑</el-button>
               <el-button @click="deleteHandleClick(scope.row.id)" type="text" size="small">删除</el-button>
             </template>
           </el-table-column>
@@ -152,11 +152,12 @@ export default {
     addMerchant() {
       this.$router.push({ path: "/add-merchant" });
     },
-    service(e) {
+    //服务
+    serviceHandleClick(id) {
       this.$router.push({
         path: "service",
         query: {
-          merchantId: e.id
+          merchantId: id
         }
       });
     },
@@ -165,11 +166,11 @@ export default {
       getMerchantList(this.page);
     },
     //编辑
-    editMerchant(row) {
+    editHandleClick(obj) {
       this.$router.push({
         path: "edit-merchant",
         query: {
-          id: row.id
+          obj: obj
         }
       });
     },
@@ -184,11 +185,16 @@ export default {
         type: "warning"
       })
         .then(() => {
-          deleteMerchantList(param);
-          //列表获取
-          setTimeout(() => {
-            getMerchantList(this.page);
-          }, 1000);
+          deleteMerchantList(param)
+            .then(res => {
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+              //列表获取
+              getMerchantList(this.page);
+            })
+            .catch(err => {});
         })
         .catch(() => {});
     }
@@ -196,12 +202,6 @@ export default {
   mounted() {
     //列表获取
     getMerchantList(this.page);
-  },
-  beforeUpdate() {
-    //列表获取
-    // getMerchantList(this.page);
-    console.log("最新列表：" + JSON.stringify(getMerchantList));
-    console.log("数据更新了");
   }
 };
 </script>

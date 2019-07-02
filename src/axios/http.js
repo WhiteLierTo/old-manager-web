@@ -4,8 +4,10 @@
 import axios from 'axios'
 import qs from 'qs'
 
-const baseURL = 'http://wx.525bama.cn:8099/oldman/';
-
+// const baseURL = 'http://wx.525bama.cn:8099/oldman/';
+const baseURL = 'http://116.62.212.169:8099/oldman/';
+// const baseURL = 'http://172.16.29.222:8099/oldman/';
+const imageURL = 'http://116.62.212.169:8099/oldman/universal/file/upload/'
 
 export const Post = (url, data) => {
     return axios({
@@ -17,7 +19,7 @@ export const Post = (url, data) => {
         timeout: 90000,
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            'Content-Type': 'application/json'
         }
     }).then(res => {
         if (res.data.errorCode == 0) {
@@ -85,3 +87,4 @@ export const Delete = (url, params) => {
         return err;
     });
 }
+export default imageURL;

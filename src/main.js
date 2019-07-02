@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import createRouter from './router/router'
 import store from './store/store'
 import Axios from 'axios'
+import http from './axios/http'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
@@ -15,7 +16,7 @@ const router = createRouter();
 
 Vue.config.productionTip = false;
 Axios.defaults.withCredentials = true;
-
+Vue.prototype.$http = http;
 
 //vue 统一处理token失效问题
 /*Axios.interceptors.response.use(response => {
