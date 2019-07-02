@@ -111,7 +111,7 @@
 import {
   getMerchantList,
   deleteMerchantList
-} from "../../model/organization/merchant-list";
+} from "../../model/organization/index";
 import { mapGetters } from "vuex";
 
 export default {

@@ -42,7 +42,6 @@
           <el-menu-item index="4-2">宣传语管理</el-menu-item>
         </router-link>
       </el-submenu>
-
       <el-submenu index="5">
         <template slot="title">商品管理</template>
         <router-link :to="{name:'goods'}">
@@ -53,6 +52,12 @@
         </router-link>
         <router-link :to="{name:'goodsType'}">
           <el-menu-item index="5-4">类型管理</el-menu-item>
+        </router-link>
+      </el-submenu>
+      <el-submenu index="7">
+        <template slot="title">服务管理</template>
+        <router-link :to="{name:'serviceList'}">
+          <el-menu-item index="7-1">服务管理</el-menu-item>
         </router-link>
       </el-submenu>
 

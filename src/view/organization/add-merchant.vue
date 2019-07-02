@@ -31,7 +31,7 @@
             <el-form-item label="机构类型" label-width="80px" prop="type">
               <el-select v-model="form.type" placeholder="请选择">
                 <el-option
-                  v-for="item in options"
+                  v-for="item in getMerchantType"
                   :key="item.id"
                   :label="item.name"
                   :value="item.id"
@@ -179,6 +179,8 @@
 </template>
 
 <script>
+import { getMerchantType } from "../../model/organization/index";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -232,6 +234,14 @@ export default {
       qualification: "", //商家资质
       merchantId: ""
     };
+  },
+  computed: {
+    ...mapGetters(["getMerchantType"])
+  },
+  methods: {},
+  mounted() {
+    //获取机构类型
+    getMerchantType();
   }
 };
 </script>

@@ -213,6 +213,17 @@ export default [{
                     requireAuth: true,
                     keepAlive: false // 不需要被缓存
                 }
+            },
+            {
+                path: '/service-list',
+                name: 'serviceList',
+                component: () =>
+                    import ('../view/service/service-list.vue'),
+                meta: {
+                    title: '服务列表',
+                    requireAuth: true,
+                    keepAlive: false // 不需要被缓存
+                }
             }
         ]
     },

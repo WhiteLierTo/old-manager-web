@@ -133,7 +133,7 @@
 </template>
 
 <script>
-import { editMerchantList } from "../../model/organization/merchant-list";
+import { editMerchantList } from "../../model/organization/index"; 
 export default {
   data() {
     return {
@@ -159,6 +159,7 @@ export default {
                 type: "success",
                 message: "修改成功!"
               });
+              this.$router.go(-1);
             })
             .catch(err => {});
         })

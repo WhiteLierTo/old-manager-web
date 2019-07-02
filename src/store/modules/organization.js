@@ -3,12 +3,14 @@
  */
 const organization = {
     state: {
-        merchantList: [],
-        total: 0
+        merchantList: [], //获取商家列表
+        total: 0, //商家总数
+        merchantType: [] //商家类型
     },
     getters: {
         getMerchantList: state => state.merchantList,
-        getTotal: state => state.total
+        getTotal: state => state.total,
+        getMerchantType: state => state.merchantType
     },
     mutations: {
         UPDATE_MERCHANT(state, merchantList) {
@@ -16,6 +18,9 @@ const organization = {
         },
         UPDATE_TOTAL(state, total) {
             state.total = total;
+        },
+        UPDATE_MERCHANT_TYPE(state, merchantType) {
+            state.merchantType = merchantType;
         }
     },
     actions: {
@@ -28,6 +33,11 @@ const organization = {
             commit
         }, val) {
             commit('UPDATE_TOTAL', val);
+        },
+        updateMerchantTypeAsync({
+            commit
+        }, val) {
+            commit('UPDATE_MERCHANT_TYPE', val);
         }
     }
 };

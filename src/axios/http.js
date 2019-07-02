@@ -14,7 +14,7 @@ export const Post = (url, data) => {
         method: 'post',
         baseURL: baseURL,
         url: url,
-        data: qs.stringify(data),
+        data: data,
         resultType: 'JSON',
         timeout: 90000,
         headers: {
@@ -22,9 +22,9 @@ export const Post = (url, data) => {
             'Content-Type': 'application/json'
         }
     }).then(res => {
-        if (res.data.errorCode == 0) {
-            return res;
-        }
+        // if (res.data.errorCode == 0) {
+        return res;
+        // }
     }).catch(err => {
         return err;
     });
@@ -35,11 +35,11 @@ export const Put = (url, data) => {
         method: 'put',
         baseURL: baseURL,
         url: url,
-        data: qs.stringify(data),
+        data: data,
         timeout: 10000,
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            'Content-Type': 'application/json'
         }
     }).then(res => {
         if (res.data.errorCode == 0) {
