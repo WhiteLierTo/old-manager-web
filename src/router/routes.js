@@ -1,6 +1,6 @@
 export default [{
         path: '/',
-        redirect: '/home'
+        redirect: '/login'
     },
     {
         path: '/home',
@@ -221,6 +221,39 @@ export default [{
                     import ('../view/service/service-list.vue'),
                 meta: {
                     title: '服务列表',
+                    requireAuth: true,
+                    keepAlive: false // 不需要被缓存
+                }
+            },
+            {
+                path: '/add-service',
+                name: 'addService',
+                component: () =>
+                    import ('../view/service/add-service.vue'),
+                meta: {
+                    title: '增加服务',
+                    requireAuth: true,
+                    keepAlive: false // 不需要被缓存
+                }
+            },
+            {
+                path: '/delete-service',
+                name: 'deleteService',
+                component: () =>
+                    import ('../view/service/delete-service.vue'),
+                meta: {
+                    title: '删除服务',
+                    requireAuth: true,
+                    keepAlive: false // 不需要被缓存
+                }
+            },
+            {
+                path: '/update-service',
+                name: 'updateService',
+                component: () =>
+                    import ('../view/service/update-service.vue'),
+                meta: {
+                    title: '修改服务',
                     requireAuth: true,
                     keepAlive: false // 不需要被缓存
                 }

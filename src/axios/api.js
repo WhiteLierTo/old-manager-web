@@ -2,6 +2,11 @@
  * 定义接口
  */
 
+/**
+ * 登录
+ */
+export const LOGIN = 'sysAccount/login';
+
 
 /**
  * 机构管理
@@ -14,10 +19,9 @@ export const GET_MERCHANT_IMG = 'srvMerchantImg'; //获取单张照片
 export const add_merchant = 'srvMerchant/add'; //增加商家列表
 
 
+
 /**
  * 服务管理
  */
 export const GET_SERVICE_LIST = 'srvServiceDetail/mine/list'; //获取服务列表 GET
-export const ADD_SERVICE_LIST = 'srvServiceDetail'; //新增服务 POST
-export const DELETE_SERVICE_LIST = 'srvServiceDetail'; //删除服务 DELETE
-export const update_service_list = 'srvServiceDetail'; //修改服务 PUT
+export const COMMON_SERVICE_LIST = 'srvServiceDetail'; //新增服务 POST 删除服务 DELETE 修改服务 PUT

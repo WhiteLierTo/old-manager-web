@@ -6,7 +6,7 @@ import qs from 'qs'
 
 // const baseURL = 'http://wx.525bama.cn:8099/oldman/';
 const baseURL = 'http://116.62.212.169:8099/oldman/';
-// const baseURL = 'http://172.16.29.222:8099/oldman/';
+// const baseURL = 'http://172.16.29.222:8099/oldman/'; 
 const imageURL = 'http://116.62.212.169:8099/oldman/universal/file/upload/'
 
 export const Post = (url, data) => {
@@ -22,12 +22,31 @@ export const Post = (url, data) => {
             'Content-Type': 'application/json'
         }
     }).then(res => {
-        // if (res.data.errorCode == 0) {
         return res;
-        // }
     }).catch(err => {
         return err;
     });
+};
+
+export const formPost = (url, data) => {
+    return axios({
+        method: 'post',
+        baseURL: baseURL,
+        url: url,
+        data: qs.stringify(data),
+        resultType: 'JSON',
+        timeout: 90000,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        }
+    }).then(res => {
+        if (res.data.errorCode == 0) {
+            return res
+        }
+    }).catch(err => {
+        return err
+    })
 };
 
 export const Put = (url, data) => {
