@@ -30,6 +30,27 @@ export const Post = (url, data) => {
   })
 }
 
+export const formPost = (url, data) => {
+  return axios({
+    method: 'post',
+    baseURL: baseURL,
+    url: url,
+    data: qs.stringify(data),
+    resultType: 'JSON',
+    timeout: 90000,
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+  }).then(res => {
+    if (res.data.errorCode == 0) {
+      return res
+    }
+  }).catch(err => {
+    return err
+  })
+}
+
 export const Put = (url, data) => {
   return axios({
     method: 'put',

@@ -3,6 +3,11 @@
  */
 
 /**
+ * 登录
+ */
+export const LOGIN = 'sysAccount/login'
+
+/**
  * 机构管理
  */
 export const GET_MERCHANT_LIST = 'srvMerchant/list' // 获取商家列表
@@ -24,3 +29,5 @@ export const update_service_list = 'srvServiceDetail' // 修改服务 PUT
  */
 export const GET_ORDER_LIST = '/srvServiceOrder/mine/list' // 获取订单列表
 export const UPDATE_ORDER = 'srvServiceOrder' // 修改单个订单
+
+export const COMMON_SERVICE_LIST = 'srvServiceDetail' // 新增服务 POST 删除服务 DELETE 修改服务 PUT

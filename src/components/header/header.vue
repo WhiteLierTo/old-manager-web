@@ -69,14 +69,17 @@
       <el-submenu index="7">
         <template slot="title">服务管理</template>
         <router-link :to="{name:'serviceList'}">
-          <el-menu-item index="7-1">服务管理</el-menu-item>
+          <el-menu-item index="7-1">服务详情</el-menu-item>
+        </router-link>
+        <router-link :to="{name:'serviceOrder'}">
+          <el-menu-item index="7-2">服务订单</el-menu-item>
         </router-link>
       </el-submenu>
       <el-menu-item style="position:absolute;right:5%;">
         欢迎回来：
         <el-dropdown>
           <span class="el-dropdown-link" style="color:#fff;margin-left:10px;font-size:15px">
-            {{user}}
+            {{userName}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -98,11 +101,13 @@ export default {
   data() {
     return {
       activeIndex2: "1",
-      user: "Lee"
+      userName: ""
     };
   },
 
-  mounted() {},
+  mounted() {
+    this.userName = sessionStorage.getItem("username");
+  },
   methods: {
     /*personal() {
       this.$router.push({ path: "/user-manage" });
