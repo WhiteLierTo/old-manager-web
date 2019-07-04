@@ -54,13 +54,24 @@
           <el-menu-item index="5-4">类型管理</el-menu-item>
         </router-link>
       </el-submenu>
+      <el-submenu index="6">
+        <template slot="title">订单管理</template>
+        <router-link :to="{name:'orderEntry'}">
+          <el-menu-item index="6-1">订单录入</el-menu-item>
+        </router-link>
+        <router-link :to="{name:'orderTracking'}">
+          <el-menu-item index="6-2">订单跟踪</el-menu-item>
+        </router-link>
+        <router-link :to="{name:'orderList'}">
+          <el-menu-item index="6-3">订单列表</el-menu-item>
+        </router-link>
+      </el-submenu>
       <el-submenu index="7">
         <template slot="title">服务管理</template>
         <router-link :to="{name:'serviceList'}">
           <el-menu-item index="7-1">服务管理</el-menu-item>
         </router-link>
       </el-submenu>
-
       <el-menu-item style="position:absolute;right:5%;">
         欢迎回来：
         <el-dropdown>
