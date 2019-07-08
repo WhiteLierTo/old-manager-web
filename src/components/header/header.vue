@@ -8,7 +8,7 @@
       text-color="#fff"
       active-text-color="#ffd04b"
     >
-      <el-menu-item style=" margin:0px 10% 0px 40px;  font-size:18px">老人服务资源网（生产）</el-menu-item>
+      <el-menu-item style=" margin:0px 20px 0px 40px;  font-size:18px">老人服务资源网（生产）</el-menu-item>
       <el-submenu index="1">
         <template slot="title">机构管理</template>
         <router-link :to="{name:'merchant-list'}">
@@ -18,21 +18,12 @@
           <el-menu-item index="1-2">类型列表</el-menu-item>
         </router-link>
       </el-submenu>
-      <el-submenu index="2">
-        <template slot="title">消息管理</template>
-        <router-link :to="{name:'information-list'}">
-          <el-menu-item index="2-1">消息列表</el-menu-item>
-        </router-link>
-        <router-link :to="{name:'message-list'}">
-          <el-menu-item index="2-2">资讯列表</el-menu-item>
-        </router-link>
-      </el-submenu>
-      <el-submenu index="3">
+<!--       <el-submenu index="3">
         <template slot="title">用户管理</template>
         <router-link :to="{name:'personal-list'}">
           <el-menu-item index="3-1">个人列表</el-menu-item>
         </router-link>
-      </el-submenu>
+      </el-submenu> -->
       <el-submenu index="4">
         <template slot="title">图片管理</template>
         <router-link :to="{name:'slideshow'}">
@@ -73,6 +64,18 @@
         </router-link>
         <router-link :to="{name:'serviceRecord'}">
           <el-menu-item index="7-2">服务录入</el-menu-item>
+        </router-link>
+      </el-submenu>
+            <el-submenu index="8">
+        <template slot="title">系统管理</template>
+        <router-link :to="{name:'information-list'}">
+          <el-menu-item index="8-1">消息列表</el-menu-item>
+        </router-link>
+        <router-link :to="{name:'message-list'}">
+          <el-menu-item index="8-2">资讯列表</el-menu-item>
+        </router-link>
+        <router-link :to="{name:'personal-list'}">
+          <el-menu-item index="8-3">用户管理</el-menu-item>
         </router-link>
       </el-submenu>
       <el-menu-item style="position:absolute;right:5%;">
