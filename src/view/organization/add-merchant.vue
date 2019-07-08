@@ -29,7 +29,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="机构类型" label-width="80px" prop="type">
-              <el-select v-model="form.type" placeholder="请选择">
+              <el-select v-model="form.type" placeholder="请选择" style="width:215px">
                 <el-option
                   v-for="item in getMerchantType"
                   :key="item.id"
@@ -41,7 +41,12 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="推荐指数" label-width="80px">
-              <el-input-number v-model="form.ratings" @change="handleChange" :max="5"></el-input-number>
+              <el-input-number
+                v-model="form.ratings"
+                @change="handleChange"
+                style="width:215px"
+                :max="5"
+              ></el-input-number>
             </el-form-item>
           </el-col>
         </el-row>
@@ -238,7 +243,14 @@ export default {
   computed: {
     ...mapGetters(["getMerchantType"])
   },
-  methods: {},
+  methods: {
+    merchantSuccess(file) {
+      this.form.headImg = file.result;
+    },
+    qualificationSuccess(file) {
+      this.qualification = file.result;
+    } 
+  },
   mounted() {
     //获取机构类型
     getMerchantType();

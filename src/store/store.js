@@ -10,10 +10,10 @@ import service from './modules/service'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: {
-    home,
-    login,
-    organization,
-    service
-  }
-})
+    modules: {
+        home,
+        login,
+        organization,
+        service
+    }
+});

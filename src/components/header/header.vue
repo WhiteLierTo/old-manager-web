@@ -71,8 +71,8 @@
         <router-link :to="{name:'serviceList'}">
           <el-menu-item index="7-1">服务详情</el-menu-item>
         </router-link>
-        <router-link :to="{name:'serviceOrder'}">
-          <el-menu-item index="7-2">服务订单</el-menu-item>
+        <router-link :to="{name:'serviceRecord'}">
+          <el-menu-item index="7-2">服务录入</el-menu-item>
         </router-link>
       </el-submenu>
       <el-menu-item style="position:absolute;right:5%;">

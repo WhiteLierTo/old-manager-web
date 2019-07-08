@@ -103,7 +103,7 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="edit = false">取 消</el-button>
+        <el-button @click="editShow = false">取 消</el-button>
         <el-button type="primary" @click="editSurehandleClick">确 定</el-button>
       </div>
     </el-dialog>
@@ -163,7 +163,7 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="edit = false">取 消</el-button>
+        <el-button @click="editShow = false">取 消</el-button>
         <el-button type="primary" @click="addSureHandleClick">确 定</el-button>
       </div>
     </el-dialog>
@@ -288,8 +288,6 @@ export default {
         ...this.checkedCities,
         ...this.form.apply.applyPeople
       ];
-      this.checkedCities.concat(this.form.apply.applyPeople);
-      console.log("apply:" + JSON.stringify(this.checkedCities));
       this.form.headImg = obj.headImg;
       this.form.id = obj.id;
       if (this.form.careType == 1) {
@@ -311,7 +309,8 @@ export default {
       } else if (this.form.careType == "康护服务") {
         this.form.careType = 2;
       }
-      console.log(JSON.stringify(this.form));
+      this.form.apply.applyPeople = JSON.stringify(this.form.apply.applyPeople);
+      this.form.apply = JSON.stringify(this.form.apply);
       editServiceFnc(this.form).then(res => {
         this.$message({
           type: "success",
@@ -358,14 +357,18 @@ export default {
     //改变服务类型对应改变适用人群
     change(val) {
       if (val == 1) {
+        this.checkedCities = [];
         this.applyCommon = apply1;
       } else if (val == 2) {
+        this.checkedCities = [];
         this.applyCommon = apply2;
       }
     },
     //修改图片
     handleAvatarSuccess(res, file) {
       this.form.headImg = file.response.result;
+
+      console.error("图片地址：" + this.form.headImg);
     },
     beforeAvatarUpload(file) {
       const isLt2M = file.size / 1024 / 1024 < 2;
