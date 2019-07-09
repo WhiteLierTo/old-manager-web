@@ -42,3 +42,7 @@ export const EDIT_SLIDESHOW = 'syspic' // 新增 修改 删除 轮播图
 export const GET_GOODS_LIST = 'srvGoods/mine/list' // 获取商品列表
 export const GOODS = 'srvGoods' // 获取商品列表
 export const GET_ONE_GOODS = 'srvGoods/one' // 获取单个商品
+export const GET_COLLECT_LIST = 'srvGoodsCollect/mine/userCollectList' // 获取商品收藏列表
+export const COLLECT = 'srvGoodsCollect' // 商品收藏的增删改查
+export const GET_GOODS_TYPE_LIST = 'srvGoodsType/list' // 商品类型列表
+export const GOODS_TYPE = 'srvGoodsType' // 商品类型的增删改查
