@@ -43,7 +43,11 @@
 
             <el-table-column prop="serviceTime" label="服务时间" min-width="150"></el-table-column>
 
-            <el-table-column prop="serviceDay" label="服务天数" min-width="150"></el-table-column>
+            <el-table-column prop="orderDay" label="购买服务天数" min-width="150" >
+              <template slot-scope="scope">
+                <div style="color:#67c23a;font-weight: 600;">{{scope.row.orderDay}}</div>
+              </template>
+            </el-table-column>
 
             <el-table-column prop="totalPrice" label="服务总价" min-width="150"></el-table-column>
 
@@ -110,15 +114,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <!-- <el-form-item label="老人状况" >
-                <div v-for="(item,index) in order.description" :key="index">
-                    <el-input v-model="item.describe" clearable></el-input>
-                 </div>
-            </el-form-item>-->
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="服务天数" prop="serviceDay">
-              <el-input v-model="order.serviceDay" clearable></el-input>
+            <el-form-item label="购买服务天数" prop="orderDay">
+              <el-input v-model="order.orderDay" clearable></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -209,23 +206,6 @@ export default {
     };
 
     return {
-      // options: [{
-      //     value: '半自理',
-      //     label: '半自理'
-      //   }, {
-      //     value: '不能自理',
-      //     label: '不能自理'
-      //   }, {
-      //     value: '失去智力',
-      //     label: '失去智力'
-      //   }, {
-      //     value: '鼻饲',
-      //     label: '鼻饲'
-      //   }, {
-      //     value: '吸痰',
-      //     label: '吸痰'
-      //   }],
-      //   value5: [],
       description: [],
       dialogFormVisible: false,
       page: {
@@ -260,6 +240,7 @@ export default {
         enabled: "",
         serviceTime: "",
         serviceDay: "",
+        orderDay:"",
         totalPrice: ""
       },
       //表单验证
@@ -304,6 +285,7 @@ export default {
       this.order.enabled = order.enabled;
       this.order.serviceTime = order.serviceTime;
       this.order.serviceDay = order.serviceDay;
+      this.order.orderDay=order.orderDay;
       this.order.totalPrice = order.totalPrice;
       this.order.idNumber = order.elderly.idNumber;
       this.order.name = order.elderly.name;
@@ -333,8 +315,7 @@ export default {
       if (status) {
         if (status) {
           this.order.state = 1;
-          this.order.inputUserId = "lee";
-          // this.order.inputUserId=sessionStorage.getItem('username')
+          this.order.inputUserId=sessionStorage.getItem('username')
           updateOrder(this.order)
             .then(res => {
               let _this = this;
