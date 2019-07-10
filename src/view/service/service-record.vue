@@ -140,7 +140,7 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="editShow = false">取 消</el-button>
+        <el-button @click="cancelHandleClick">取 消</el-button>
         <el-button type="primary" @click="editSurehandleClick">确 定</el-button>
       </div>
     </el-dialog>
@@ -234,13 +234,18 @@ export default {
       editServiceRecordFnc(this.form).then(res => {
         this.$message({
           type: "success",
-          message: "删除成功!"
+          message: "更新成功!"
         });
         //获取服务列表
         getServiceRecordFnc(this.page);
         this.editShow = false;
       });
-      // console.log("最新修改：" + JSON.stringify(this.form));
+    },
+    //取消编辑
+    cancelHandleClick() {
+      this.editShow = false;
+      //获取服务列表
+      getServiceRecordFnc(this.page);
     },
     handleChange(val) {
       this.form.serviceDay = val;
