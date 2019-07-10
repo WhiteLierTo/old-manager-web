@@ -1,12 +1,12 @@
 <template>
   <div>
-    <el-container>
+    <!-- <el-container>
       <el-header>
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">订单管理</el-breadcrumb-item>
           <el-breadcrumb-item>订单录入</el-breadcrumb-item>
         </el-breadcrumb>
-      </el-header>
+      </el-header> -->
       <el-main>
         <el-card class="box-card">
           <el-form label-width="100px" :model="order" ref="order">
@@ -83,7 +83,7 @@
           </el-table>
         </el-card>
       </el-main>
-    </el-container>
+    <!-- </el-container> -->
 
     <el-dialog title="订单录入" :visible.sync="dialogFormVisible" width="80%">
       <el-form label-width="130px" :model="order" :rules="rules" ref="order" class="demo-ruleForm">

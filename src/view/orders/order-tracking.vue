@@ -1,12 +1,5 @@
 <template>
   <div>
-    <el-container>
-      <el-header>
-        <el-breadcrumb separator=">">
-          <el-breadcrumb-item :to="{ path: '/' }">订单管理</el-breadcrumb-item>
-          <el-breadcrumb-item>订单跟踪</el-breadcrumb-item>
-        </el-breadcrumb>
-      </el-header>
       <el-main>
         <el-card class="box-card">
           <el-form label-width="130px" :model="order" ref="order" >
@@ -60,7 +53,7 @@
             </el-table-column>
             <el-table-column prop="serviceDay" label="剩余服务天数" min-width="150">
                <template slot-scope="scope">
-                <div style="color:#e6a23c;font-weight: 600;">{{scope.row.orderDay}}</div>
+                <div style="color:#e6a23c;font-weight: 600;">{{scope.row.serviceDay}}</div>
               </template>
             </el-table-column>
             <el-table-column prop="serviceName" label="服务人员" min-width="150"></el-table-column>
@@ -99,7 +92,6 @@
           </el-table>
         </el-card>
       </el-main>
-    </el-container>
     
      <el-dialog title="订单录入" :visible.sync="dialogFormVisible" width="80%">
       <el-form label-width="130px" :model="order"  ref="order" class="demo-ruleForm">
