@@ -6,7 +6,7 @@
         <el-button plain class="addBtn" type="primary" @click="addHandleClick">新增服务</el-button>
         <el-input class="query" placeholder="请输入查询的服务" v-model="careType" clearable></el-input>
         <el-button type="primary" @click="searchHandleClick">搜索</el-button>
-        <el-table :data="getServiceList" border>
+        <el-table :data="serviceList" border>
           <el-table-column prop="careType" label="服务类型">
             <template slot-scope="scope">
               <div v-if="scope.row.careType==1">生活服务</div>
@@ -43,7 +43,7 @@
           :page-sizes="[10, 20, 30, 40]"
           :page-size="page.size"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="getServiceTotal"
+          :total="total"
           style="float: right;margin:20px 0px 20px 0px"
         ></el-pagination>
       </div>
@@ -83,7 +83,7 @@
           </el-col>
           <el-col :span="24" style="margin-left:10px;">
             <p>适用人群</p>
-            <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+            <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange('edit')">
               <el-checkbox v-for="(item,index) in applyCommon" :label="item" :key="index">{{item}}</el-checkbox>
             </el-checkbox-group>
           </el-col>
@@ -110,23 +110,23 @@
 
     <!-- 新增 -->
     <el-dialog title="新增用户" :visible.sync="addShow">
-      <el-form :model="form">
+      <el-form :model="addForm">
         <el-row>
           <el-col :span="12">
             <el-form-item label="服务时间" label-width="80px">
-              <el-input style="width:80%" v-model="form.serviceTime" autocomplete="off"></el-input>
+              <el-input style="width:80%" v-model="addForm.serviceTime" autocomplete="off"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="服务价格" label-width="80px">
-              <el-input style="width:80%" v-model="form.price" autocomplete="off"></el-input>
+              <el-input style="width:80%" v-model="addForm.price" autocomplete="off"></el-input>
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
             <el-form-item label="服务类型" label-width="80px">
               <el-select
-                v-model="form.careType"
+                v-model="addForm.careType"
                 placeholder="请选择服务类型"
                 @change="change"
                 style="width:80%"
@@ -138,12 +138,12 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="服务名称" label-width="80px">
-              <el-input style="width:80%" v-model="form.serviceType" autocomplete="off"></el-input>
+              <el-input style="width:80%" v-model="addForm.serviceType" autocomplete="off"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24" style="margin-left:10px;">
             <p>适用人群</p>
-            <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+            <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange('add')">
               <el-checkbox v-for="(item,index) in applyCommon" :label="item" :key="index">{{item}}</el-checkbox>
             </el-checkbox-group>
           </el-col>
@@ -153,10 +153,10 @@
               class="avatar-uploader"
               :action="img"
               :show-file-list="false"
-              :on-success="handleAvatarSuccess"
+              :on-success="addHandleAvatarSuccess"
               :before-upload="beforeAvatarUpload"
             >
-              <img v-if="form.headImg" :src="form.headImg" class="avatar" />
+              <img v-if="headImg" :src="headImg" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-col>
@@ -208,9 +208,21 @@ export default {
         headImg: "",
         serviceType: ""
       },
+      //新增
+      addForm: {
+        id: "",
+        careType: "",
+        serviceTime: "",
+        price: "",
+        apply: {},
+        serviceType: ""
+      },
+      headImg: "",
       checkedCities: [],
       applyCommon: apply1,
-      img: ""
+      img: "",
+      serviceList: [],
+      total: 0
     };
   },
   watch: {
@@ -224,9 +236,6 @@ export default {
       deep: true
     }
   },
-  computed: {
-    ...mapGetters(["getServiceList", "getServiceTotal"])
-  },
   methods: {
     //搜索
     searchHandleClick() {
@@ -235,17 +244,20 @@ export default {
       } else if (this.careType == "康护服务") {
         this.page.type = 2;
       }
-      getServiceFnc(this.page);
+      //列表获取
+      this.getServiceListFnc();
     },
     //分页
     handleSizeChange(val) {
       this.page.size = val;
-      getServiceFnc(this.page);
+      //列表获取
+      this.getServiceListFnc();
     },
     //跳页
     handleCurrentChange(val) {
       this.page.current = val;
-      getServiceFnc(this.page);
+      //列表获取
+      this.getServiceListFnc();
     },
     //删除
     deleteHandleClick(id) {
@@ -261,8 +273,13 @@ export default {
                 type: "success",
                 message: "删除成功!"
               });
+              //判断是否当前页最后一条数据，如果是，删除后，返回上一页
+              const totalPage = Math.ceil((this.total - 1) / this.page.size); // 总页数
+              this.page.current =
+                this.page.current > totalPage ? totalPage : this.page.current;
+              this.page.current = this.page.current < 1 ? 1 : this.page.current;
               //列表获取
-              getServiceFnc(this.page);
+              this.getServiceListFnc();
             })
             .catch(err => {});
         })
@@ -271,8 +288,6 @@ export default {
     //添加
     addHandleClick() {
       this.addShow = true;
-      //清空表单
-      this.form = {};
     },
     //编辑
     editHandleClick(obj) {
@@ -309,16 +324,28 @@ export default {
       } else if (this.form.careType == "康护服务") {
         this.form.careType = 2;
       }
-      this.form.apply.applyPeople = JSON.stringify(this.form.apply.applyPeople);
-      this.form.apply = JSON.stringify(this.form.apply);
-      editServiceFnc(this.form).then(res => {
+      let applyObj1 = {};
+      applyObj1.applyPeople = JSON.stringify(this.checkedCities);
+      this.form.apply = applyObj1;
+
+      let form1 = {
+        apply: JSON.stringify(this.form.apply),
+        careType: this.form.careType,
+        headImg: this.form.headImg,
+        id: this.form.id,
+        price: this.form.price,
+        serviceTime: this.form.serviceTime,
+        serviceType: this.form.serviceType
+      };
+      console.log("form:" + JSON.stringify(form1));
+      editServiceFnc(form1).then(res => {
         this.$message({
           type: "success",
           message: "修改成功!"
         });
         this.editShow = false;
         //服务详情列表获取
-        getServiceFnc(this.page);
+        this.getServiceListFnc();
 
         //清空
         this.checkedCities = [];
@@ -330,29 +357,33 @@ export default {
         this.$message.error("请选择适用人群!");
         return;
       }
-      if (this.form.careType == "生活服务") {
-        this.form.careType = 1;
-      } else if (this.form.careType == "康护服务") {
-        this.form.careType = 2;
+      if (this.addForm.careType == "生活服务") {
+        this.addForm.careType = 1;
+      } else if (this.addForm.careType == "康护服务") {
+        this.addForm.careType = 2;
       }
-      addServiceFnc(this.form).then(res => {
+      this.addForm.headImg = this.headImg;
+      addServiceFnc(this.addForm).then(res => {
         this.$message({
           type: "success",
           message: "添加成功!"
         });
         this.addShow = false;
         //服务详情列表获取
-        getServiceFnc(this.page);
+        this.getServiceListFnc();
         //清空
         this.checkedCities = [];
+        this.addForm = {};
+        this.headImg = "";
       });
     },
     //选择适用人群
-    handleCheckedCitiesChange() {
+    handleCheckedCitiesChange(status) {
       let applyObj = {};
-      let applyPeople = this.checkedCities;
-      applyObj.applyPeople = JSON.stringify(applyPeople);
-      this.form.apply = JSON.stringify(applyObj);
+      if (status == "add") {
+        applyObj.applyPeople = JSON.stringify(this.checkedCities);
+        this.addForm.apply = JSON.stringify(applyObj);
+      }
     },
     //改变服务类型对应改变适用人群
     change(val) {
@@ -364,11 +395,13 @@ export default {
         this.applyCommon = apply2;
       }
     },
+    //增加图片
+    addHandleAvatarSuccess(res, file) {
+      this.headImg = file.response.result;
+    },
     //修改图片
     handleAvatarSuccess(res, file) {
       this.form.headImg = file.response.result;
-
-      console.error("图片地址：" + this.form.headImg);
     },
     beforeAvatarUpload(file) {
       const isLt2M = file.size / 1024 / 1024 < 2;
@@ -376,11 +409,22 @@ export default {
         this.$message.error("上传头像图片大小不能超过 2MB!");
       }
       return isLt2M;
+    },
+    getServiceListFnc() {
+      getServiceFnc(this.page).then(res => {
+        console.error(JSON.stringify(res.data.result.list));
+        res.data.result.list.forEach(v => {
+          v.apply = JSON.parse(v.apply);
+          v.apply.applyPeople = JSON.parse(v.apply.applyPeople);
+        });
+        this.serviceList = res.data.result.list;
+        this.total = res.data.result.total;
+      });
     }
   },
   mounted() {
     //服务详情列表获取
-    getServiceFnc(this.page);
+    this.getServiceListFnc();
     this.img = imageURL;
   }
 };
