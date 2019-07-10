@@ -208,7 +208,7 @@ export default {
       getServiceRecordFnc(this.page);
     },
     //编辑
-    editHandleClick(obj) {
+    editHandleClick(obj) { 
       this.editShow = true;
       if (obj.state == 0) {
         obj.stateVal = "订单创建";
