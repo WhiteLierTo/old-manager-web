@@ -31,6 +31,7 @@ export const COMMON_SERVICE_RECORD = 'srvServiceOrder' // 新增服务订单 POS
      */
 export const GET_ORDER_LIST = 'srvServiceOrder/mine/list' // 获取订单列表
 export const UPDATE_ORDER = 'srvServiceOrder' // 修改单个订单
+export const UPDATE_ORDER_PUSH = 'srvServiceOrder/mine' // 订单消息推送
     /**
      * 图片管理
      */
