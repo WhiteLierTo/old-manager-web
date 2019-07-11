@@ -230,7 +230,8 @@ export default {
       handler(val) {
         if (!val) {
           this.page.type = "";
-          getServiceFnc(this.page);
+          //列表获取
+          this.getServiceListFnc();
         }
       },
       deep: true

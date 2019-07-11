@@ -48,10 +48,11 @@ export default {
           this.$router.push({
             path: "/merchant-list"
           });
-            this.$message({
-              type: "success",
-              message: "登录成功!"
-            });
+          this.$notify({
+            title: "登录成功",
+            message: `欢迎登录：${loginInfo.username}`,
+            type: "success"
+          });
         })
         .catch(err => {
           this.$message("用户名或密码错误");
