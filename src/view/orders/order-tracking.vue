@@ -35,8 +35,8 @@
             <el-table-column prop="serviceType" label="服务类型" min-width="110"></el-table-column>
             <el-table-column prop="orderUserId" label="下单用户名" min-width="150"></el-table-column>
             <el-table-column prop="elderly.idNumber" label="老人身份证号" min-width="150"></el-table-column>
-            <el-table-column prop="elderly.name" label="老人姓名" min-width="150"></el-table-column>
-            <el-table-column prop="elderly.description" label="老人身体状况" min-width="200">
+            <el-table-column prop="elderly.name" label="老人姓名" min-width="80"></el-table-column>
+            <el-table-column prop="elderly.description" label="老人身体状况" min-width="170">
               <template slot-scope="scope">
                 <block v-for="(item,index) in scope.row.elderly.description" :key="index">
                   <span>{{item.describe}}&nbsp;&nbsp;&nbsp;</span>
@@ -44,28 +44,32 @@
               </template>
             </el-table-column>
 
-            <el-table-column prop="serviceTime" label="服务时间" min-width="150"></el-table-column>
+            <el-table-column prop="serviceTime" label="服务时间" min-width="120"></el-table-column>
 
-            <el-table-column prop="orderDay" label="购买服务天数" min-width="150">
+            <el-table-column prop="orderDay" label="购买服务天数" min-width="90">
               <template slot-scope="scope">
-                <div style="color:#67c23a;font-weight: 600;">{{scope.row.orderDay}}</div>
+                <div style="color:#67c23a;font-weight: 600;text-align: center ">{{scope.row.orderDay}}</div>
               </template>
             </el-table-column>
-            <el-table-column prop="serviceDay" label="剩余服务天数" min-width="150">
+            <el-table-column prop="serviceDay" label="剩余服务天数" min-width="90">
                <template slot-scope="scope">
-                <div style="color:#e6a23c;font-weight: 600;">{{scope.row.serviceDay}}</div>
+                <div style="color:#e6a23c;font-weight: 600;text-align: center ">{{scope.row.orderDay}}</div>
               </template>
             </el-table-column>
-            <el-table-column prop="serviceName" label="服务人员" min-width="150"></el-table-column>
-            <el-table-column prop="servicePhone" label="服务人员手机号" min-width="150"></el-table-column>
-            <el-table-column prop="totalPrice" label="服务总价" min-width="150"></el-table-column>
-
+            <el-table-column prop="serviceName" label="服务人员" min-width="80"></el-table-column>
+            <el-table-column prop="servicePhone" label="服务人员手机号" min-width="90"></el-table-column>
+            <el-table-column prop="totalPrice" label="服务总价" min-width="80">
+              <template slot-scope="scope">
+                  <div>￥{{scope.row.totalPrice}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="inputUserId" label="订单归属" min-width="80" v-if="admin"></el-table-column>
             <el-table-column prop="state" label="订单状态">
               <template slot-scope="scope">
                 <div v-if="scope.row.state==0" style="color:#f71c1c">
                   <span >订单创建</span>
                 </div>
-                <div v-if="scope.row.state==1" style="color:#3a8ee6">
+                <div v-if="scope.row.state==1" style="color:#e6a23c">
                   <span>订单已录入</span>
                 </div>
                 <div v-if="scope.row.state==2" style="color:#c0c4cc">
@@ -86,14 +90,14 @@
             <el-table-column prop="createAt" label="创建时间"></el-table-column>
             <el-table-column fixed="right" label="操作">
               <template slot-scope="scope">
-                <el-button type="text" size="small" @click="orderEntry(scope.row)">修改状态</el-button>
+                <el-button type="text" size="small" @click="updateState(scope.row)">修改状态</el-button>
               </template>
             </el-table-column>
           </el-table>
         </el-card>
       </el-main>
     
-     <el-dialog title="订单录入" :visible.sync="dialogFormVisible" width="80%">
+     <el-dialog title="修改状态" :visible.sync="dialogFormVisible" width="80%">
       <el-form label-width="130px" :model="order"  ref="order" class="demo-ruleForm">
         <el-row>
           <el-col :span="8">
@@ -139,6 +143,11 @@
           <el-col :span="8">
             <el-form-item label="服务总价" prop="totalPrice">
               <el-input v-model="order.totalPrice" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="订单归属" v-if="admin">
+              <el-input v-model="order.inputUserId" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -190,6 +199,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
+      admin:'',
       dialogFormVisible: false,
        options: [{
           value: 1,
@@ -226,17 +236,11 @@ export default {
   },
   methods: {
     /**
-     *点击录入执行的事件
+     *点击修改状态执行的事件
      */
-    orderEntry(order) {
-      console.error("打印录入对象："+ order);
-      // 表单验证提醒重置
-      if (this.$refs["order"] != undefined) {
-        this.$refs["order"].resetFields();
-      }
+    updateState(order) {
       //将选中的表格中的数据转移到一个新对象中
       this.order = order;
-      this.name = this.order.elderly.name;
       this.dialogFormVisible = true;
     }, /**
      * dailog中的取消事件
@@ -301,7 +305,12 @@ export default {
   },
   //初始化表格数据
   mounted() {
-   this.page.inputUserId=sessionStorage.getItem('username');
+    //判断是不是管理员登录
+    if(sessionStorage.getItem('username')!='admin'){
+          this.page.inputUserId=sessionStorage.getItem('username');
+    }else{
+      this.admin=sessionStorage.getItem('username')
+    } 
     this.flushOrderList();
   }
 };

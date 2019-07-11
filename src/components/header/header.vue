@@ -53,7 +53,7 @@
         <router-link :to="{name:'orderTracking'}">
           <el-menu-item index="6-2">订单跟踪</el-menu-item>
         </router-link>
-        <router-link :to="{name:'orderList'}">
+        <router-link :to="{name:'orderList'}" v-if="userName =='admin'">
           <el-menu-item index="6-3">订单列表</el-menu-item>
         </router-link>
       </el-submenu>

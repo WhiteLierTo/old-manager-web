@@ -32,7 +32,7 @@
             <el-table-column prop="serviceType" label="服务类型" min-width="110"></el-table-column>
             <el-table-column prop="orderUserId" label="下单用户名" min-width="150"></el-table-column>
             <el-table-column prop="elderly.idNumber" label="老人身份证号" min-width="150"></el-table-column>
-            <el-table-column prop="elderly.name" label="老人姓名" min-width="150"></el-table-column>
+            <el-table-column prop="elderly.name" label="老人姓名" min-width="80"></el-table-column>
             <el-table-column prop="elderly.description" label="老人身体状况" min-width="200">
               <template slot-scope="scope">
                 <block v-for="(item,index) in scope.row.elderly.description" :key="index">
@@ -41,36 +41,40 @@
               </template>
             </el-table-column>
 
-            <el-table-column prop="serviceTime" label="服务时间" min-width="150"></el-table-column>
+            <el-table-column prop="serviceTime" label="服务时间" min-width="100"></el-table-column>
 
-            <el-table-column prop="orderDay" label="购买服务天数" min-width="150" >
+            <el-table-column prop="orderDay" label="购买服务天数" min-width="100" >
               <template slot-scope="scope">
-                <div style="color:#67c23a;font-weight: 600;">{{scope.row.orderDay}}</div>
+                <div style="color:#67c23a;font-weight: 600; text-align: center ">{{scope.row.orderDay}}</div>
               </template>
             </el-table-column>
 
-            <el-table-column prop="totalPrice" label="服务总价" min-width="150"></el-table-column>
+            <el-table-column prop="totalPrice" label="服务总价" min-width="100">
+              <template slot-scope="scope">
+                  <div>￥{{scope.row.totalPrice}}</div>
+              </template>
+            </el-table-column>
 
             <el-table-column prop="state" label="订单状态">
-              <template slot-scope="scope">
-                <block v-if="scope.row.state==0">
-                  <span>订单创建</span>
-                </block>
-                <block v-if="scope.row.state==1">
+             <template slot-scope="scope">
+                <div v-if="scope.row.state==0" style="color:#f71c1c">
+                  <span >订单创建</span>
+                </div>
+                <div v-if="scope.row.state==1" style="color:#e6a23c">
                   <span>订单已录入</span>
-                </block>
-                <block v-if="scope.row.state==2">
+                </div>
+                <div v-if="scope.row.state==2" style="color:#c0c4cc">
                   <span>订单取消</span>
-                </block>
-                <block v-if="scope.row.state==3">
+                </div>
+                <div v-if="scope.row.state==3" style="color:#e6a23c">
                   <span>服务中</span>
-                </block>
-                <block v-if="scope.row.state==4">
+                </div>
+                <div v-if="scope.row.state==4" style="color:#67c23a">
                   <span>服务完成</span>
-                </block>
-                <block v-if="scope.row.state==5">
-                  <span>用户确认</span>
-                </block>
+                </div>
+                <div v-if="scope.row.state==5" style="color:#67c23a">
+                  <span>用户已确认</span>
+                </div>
               </template>
             </el-table-column>
 
@@ -128,6 +132,11 @@
           <el-col :span="8">
             <el-form-item label="服务总价" prop="totalPrice">
               <el-input v-model="order.totalPrice" clearable></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8" v-if="admin">
+            <el-form-item label="订单归属" prop="orderDay">
+              <el-input v-model="order.inputUserId" clearable></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -206,7 +215,7 @@ export default {
     };
 
     return {
-      description: [],
+      admin:'',
       dialogFormVisible: false,
       page: {
         current: 1,
@@ -315,7 +324,10 @@ export default {
       if (status) {
         if (status) {
           this.order.state = 1;
-          this.order.inputUserId=sessionStorage.getItem('username')
+         //不为管理员登录时则插入订单录入的用户id
+          if(!this.admin){
+            this.order.inputUserId=sessionStorage.getItem('username')
+          }         
           updateOrder(this.order)
             .then(res => {
               let _this = this;
@@ -368,6 +380,10 @@ export default {
   },
   //初始化表格数据
   mounted() {
+    //判断是不是管理员登录
+    if(sessionStorage.getItem('username')=='admin'){
+          this.admin=sessionStorage.getItem('username');
+    }
     this.flushOrderList();
   }
 };
@@ -394,7 +410,7 @@ export default {
   margin: 2% 0 2% 38%;
 }
 
-.title-list {
+.title-list { 
   margin-bottom: 15px;
 }
 </style>
