@@ -9,6 +9,7 @@ import organization from './modules/organization'
 import service from './modules/service'
 import picture from './modules/picture'
 import goods from './modules/goods'
+import information from './modules/information'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     organization,
     service,
     picture,
-    goods
+    goods,
+    information
   }
 })

@@ -275,7 +275,8 @@ export default {
                 message: "删除成功!"
               });
               //判断是否当前页最后一条数据，如果是，删除后，返回上一页
-              const totalPage = Math.ceil((this.total - 1) / this.page.size); // 总页数
+              // 总页数
+              const totalPage = Math.ceil((this.total - 1) / this.page.size); 
               this.page.current =
                 this.page.current > totalPage ? totalPage : this.page.current;
               this.page.current = this.page.current < 1 ? 1 : this.page.current;

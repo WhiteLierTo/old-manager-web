@@ -47,3 +47,18 @@ export const GET_COLLECT_LIST = 'srvGoodsCollect/mine/userCollectList' // 获取
 export const COLLECT = 'srvGoodsCollect' // 商品收藏的增删改查
 export const GET_GOODS_TYPE_LIST = 'srvGoodsType/list' // 商品类型列表
 export const GOODS_TYPE = 'srvGoodsType' // 商品类型的增删改查
+
+/**
+     * 消息管理
+     */
+export const GET_INFORMATION_LIST = 'srvInformation/infoList' // 获取消息表
+export const INFORMATION = 'srvInformation' // 新增 修改 删除 消息
+export const GET_ONE_INFORMATION = 'srvAdditionalInformation/one' // 获取单个消息
+export const GET_SERVICE = 'srvService/list' // 获取商家服务
+export const GET_CLIENT = 'sysClient/mine/list' // 获取客户端列表
+export const CLIENT = 'sysClient' // 客户端删除
+export const GET_MESSAGE_LIST = 'srvNews/newsList' // 获取资讯列表
+export const MESSAGE = 'srvNews' // 资讯新增 修改 删除
+export const GET_USER_LIST = 'sysAccount/accountList' // 获取用户列表
+export const USER = 'sysAccount' // 用户 修改 删除
+export const ADD_USER = 'sysAccount/addAccount' // 用户新增

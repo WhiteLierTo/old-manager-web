@@ -2,26 +2,26 @@
   <div>
       <el-main>
         <el-card class="box-card">
-          <el-form label-width="130px" :model="order" ref="order" >
-            <el-row class="checkoutAll">
+          <el-form :model="order" ref="order" >
+            <el-row type="flex" justify="space-between" class="checkoutAll">
               <el-col :span="4">
-                <el-form-item label="订单编号">
-                  <el-input v-model="page.id" clearable></el-input>
+                <el-form-item>
+                  <el-input  placeholder="请输入订单编号" v-model="page.id" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="4">
-                <el-form-item label="下单用户名">
-                  <el-input v-model="page.orderUserId" clearable></el-input>
+                <el-form-item>
+                  <el-input placeholder="请输入下单用户名" v-model="page.orderUserId" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="4">
-                <el-form-item label="服务人员名称">
-                  <el-input v-model="page.serviceName" clearable></el-input>
+                <el-form-item>
+                  <el-input placeholder="服务人员名称" v-model="page.serviceName" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="4">
-                <el-form-item label="服务人员手机号">
-                  <el-input v-model="page.servicePhone" clearable></el-input>
+                <el-form-item>
+                  <el-input  placeholder="服务人员手机号" v-model="page.servicePhone" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="4">
@@ -296,6 +296,7 @@ export default {
           _this.orderList.forEach(v => {
             v.elderly.description = JSON.parse(v.elderly.description);
             _this.description = v.elderly.description;
+            //v.createAt = v.createAt.replace(/T/g, " ")
           });
           _this.pageCount = res.data.result.pages;
           _this.pages = res.data.result.total;

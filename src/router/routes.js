@@ -267,6 +267,17 @@ export default [{
       requireAuth: true,
       keepAlive: false // 不需要被缓存
     }
+  },
+  {
+    path: '/client-list',
+    name: 'clientList',
+    component: () =>
+                    import('../view/information/client-list.vue'),
+    meta: {
+      title: '客户端列表',
+      requireAuth: true,
+      keepAlive: false // 不需要被缓存
+    }
   }
   ]
 },

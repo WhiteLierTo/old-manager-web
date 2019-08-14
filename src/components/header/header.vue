@@ -77,6 +77,9 @@
         <router-link :to="{name:'personal-list'}">
           <el-menu-item index="8-3">用户管理</el-menu-item>
         </router-link>
+        <router-link :to="{name:'clientList'}">
+          <el-menu-item index="8-4">客户端管理</el-menu-item>
+        </router-link>
       </el-submenu>
       <el-menu-item style="position:absolute;right:5%;">
         欢迎回来：
